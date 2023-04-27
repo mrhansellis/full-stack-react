@@ -9,16 +9,17 @@ export default function Shelter() {
   // useEffect
 
   useEffect(() =>{
-    fetch(`http://localhost:5123/api/v2/residents`)
+    fetch(`https://localhost:7220/api/v2/residents`)
+    
     .then(response => {
       if (!response.ok) {
         throw new Error(`${response.status}: ${response.statusText}`);
       } else {
         return response.json()
       }
-    })
+    }) 
     .then((jsonifiedResponse) => {
-      setAllDinos(jsonifiedResponse.results)
+      setAllDinos(jsonifiedResponse)
       setIsLoaded(true)
     })
     .catch((error) => {
@@ -26,8 +27,7 @@ export default function Shelter() {
       setIsLoaded(true)
     });
   },[])
-  console.log(error);
-  console.log(allDinos)
+  console.log(allDinos);
 
   if (error) {
     return <h1>Error: {error}</h1>;
@@ -36,7 +36,14 @@ export default function Shelter() {
   } else {
     return (
       <>
-        <h1>Hi THERE</h1>
+        <h1>Residents</h1>
+        <ul>
+          {allDinos.map((residents, index) =>
+            <li key={index}>
+              <h3>{residents.name}</h3>
+            </li>
+          )}
+        </ul>
       </>
     )
   }
