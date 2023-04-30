@@ -1,10 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useReducer, useEffect} from 'react';
+import allDinosReducer from "./../reducers/all-dinos-reducer";
+import { getAllDinosFailure, getAllDinosSuccess  } from './../actions/index';
+import { Link } from "react-router-dom";
+
+const initialState = {
+  isLoaded: false,
+  allDinos: [],
+  error: null
+};
 
 export default function Shelter() {
   // const section
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [allDinos, setAllDinos] = useState([]);
+  const [state, dispatch] = useReducer(allDinosReducer, initialState);
 
   // useEffect
 
@@ -19,20 +26,22 @@ export default function Shelter() {
       }
     }) 
     .then((jsonifiedResponse) => {
-      setAllDinos(jsonifiedResponse)
-      setIsLoaded(true)
+      const action = getAllDinosSuccess(jsonifiedResponse)
+      dispatch(action);
     })
     .catch((error) => {
-      setError(error.message)
-      setIsLoaded(true)
+      const action = getAllDinosFailure(error)
+      dispatch(action);
     });
   },[])
-  console.log(allDinos);
+  // console.log(allDinos);
+
+  const { error, isLoaded, allDinos } = state;
 
   if (error) {
     return <h1>Error: {error}</h1>;
   } else if (!isLoaded) {
-    return <h1>...loading...</h1>;
+    return <h1>...herding all dinos...</h1>;
   } else {
     return (
       <>
@@ -44,6 +53,7 @@ export default function Shelter() {
             </li>
           )}
         </ul>
+        <Link to="/form">Add New Dino</Link>
       </>
     )
   }
