@@ -1,16 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const NewResidentForm = (props) => {
-  function handleNewResidentFormSub(e) {
+const NewResidentForm = () => {
+  const [formData, setFormData] = useState({
+    chipped: false
+  });
+
+  const handleNewResidentFormSub = async (e) => {
     e.preventDefault();
-    // props.onNewResidentCreation ({
-    //   name: e.target.name.value,
-    //   species: e.target.name.value,
-    //   sex: e.target.sex.value,
-    //   chipped: e.target.chipped.value,
-    //   notes: e.target.notes.value
-    // })
+    
+    const response = await fetch("https://localhost:7220/api/v2/residents", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+    const data = await response.json();
+    console.log("Data:", data);
+  }
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({...formData, [name]: value});
+    console.log("formData:", formData);
+  }
+
+  const handleRadio = (e) => {
+    const {name, value} = e.target;
+    setFormData({...formData, [name]: value === "true" });
   }
   
   return (
@@ -20,21 +39,23 @@ const NewResidentForm = (props) => {
         <input
           type='text'
           name='name'
-          placeholder='Name' />
+          placeholder='Name' 
+          onChange={handleChange} />
         <br/>
         <label htmlFor="species">Species: </label>
         <input
           type='text'
           name='species'
-          placeholder='Species' />
+          placeholder='Species' 
+          onChange={handleChange} />
         <br/>
         <label htmlFor="sex">Sex, yes pls: </label>
         <input
           type='text'
           name='sex'
-          placeholder='Sex' />
+          placeholder='Sex' 
+          onChange={handleChange} />
         <br/>
-        
         <div id = 'wrapper'>
           <label>Chipped: </label>
           
@@ -42,21 +63,28 @@ const NewResidentForm = (props) => {
           <input 
             type='radio'
             name='chipped'
-            value='true' />
+            value='true'
+            checked={formData.chipped}
+            onChange={handleRadio} />
           <label htmlFor="chipped">False</label>
           <input
             type='radio'
             name='chipped'
-            value='false' />
+            value='false'
+            checked={!formData.chipped}
+            onChange={handleRadio} />
         </div>
         <br/>
         <label>Notes: </label>
         <textarea
           name='notes'
-          placeholder='Notes' />
+          placeholder='Notes' 
+          onChange={handleChange} />
         <br />
         <button type="submit">Submit</button>
       </form>
+
+      <Link to="/">Return Home</Link>
     </>
   )
 }

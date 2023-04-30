@@ -16,7 +16,7 @@ export default function Shelter() {
   // useEffect
 
   useEffect(() =>{
-    fetch(`https://localhost:7220/api/v2/residents`)
+    fetch(`https://localhost:7220/api/v2/residents?pageSize=100`)
     
     .then(response => {
       if (!response.ok) {
