@@ -34,8 +34,7 @@ export default function Shelter() {
       dispatch(action);
     });
   },[])
-  // console.log(allDinos);
-
+  
   const { error, isLoaded, allDinos } = state;
 
   if (error) {
@@ -46,13 +45,18 @@ export default function Shelter() {
     return (
       <>
         <h1>Residents</h1>
-        <ul>
-          {allDinos.map((residents, index) =>
-            <li key={index}>
-              <h3>{residents.name}</h3>
-            </li>
-          )}
-        </ul>
+        
+          <ul>
+            {allDinos.map((residents, index) =>
+              //<div onClick={() => /*handleDinoDetailClick*/(residents.id)}>
+                <li key={index}>
+                  <h3>{residents.name}</h3>
+                  <Link to={`/details/${residents.residentId}`}>View Detail</Link>
+                </li>
+              //</div>
+            )}
+          </ul>
+        
         <Link to="/form">Add New Dino</Link>
       </>
     )
