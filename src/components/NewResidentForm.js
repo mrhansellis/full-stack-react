@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as url from './../urls';
 
 const NewResidentForm = () => {
   const [formData, setFormData] = useState({
     chipped: false
   });
-
+  const navigate = useNavigate();
+  
   const handleNewResidentFormSub = async (e) => {
     e.preventDefault();
     
@@ -18,7 +19,10 @@ const NewResidentForm = () => {
       },
       body: JSON.stringify(formData)
     });
-    return response;
+    const data = await response.json();
+    
+    navigate('/addsuccess');
+    return data;
   }
 
   const handleChange = (e) => {
@@ -30,7 +34,7 @@ const NewResidentForm = () => {
     const {name, value} = e.target;
     setFormData({...formData, [name]: value === "true" });
   }
-  
+
   return (
     <>
       <form onSubmit={handleNewResidentFormSub}>
@@ -92,5 +96,5 @@ NewResidentForm.propTypes = {
   handleNewResidentFormSub: PropTypes.func
 }
 
-export default NewResidentForm
+export default NewResidentForm;
 
