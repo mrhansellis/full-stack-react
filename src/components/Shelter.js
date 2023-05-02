@@ -2,6 +2,7 @@ import React, {useReducer, useEffect} from 'react';
 import allDinosReducer from "./../reducers/all-dinos-reducer";
 import { getAllDinosFailure, getAllDinosSuccess  } from './../actions/index';
 import { Link } from "react-router-dom";
+import * as url from './../urls';
 
 const initialState = {
   isLoaded: false,
@@ -16,7 +17,7 @@ export default function Shelter() {
   // useEffect
 
   useEffect(() =>{
-    fetch(`https://localhost:7220/api/v2/residents?pageSize=100`)
+    fetch(url.ResidentsCall)  
     
     .then(response => {
       if (!response.ok) {

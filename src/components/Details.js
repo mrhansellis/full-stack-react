@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import allDinosReducer from '../reducers/all-dinos-reducer';
 import { useParams } from 'react-router';
 import { getAllDinosFailure, getAllDinosSuccess } from '../actions';
+import * as url from './../urls';
 
 const initialState = {
   isLoaded: false,
@@ -15,7 +16,7 @@ export default function DinoDetails() {
   const { residentId } = useParams();
 
   useEffect(() => {
-    fetch(`https://localhost:7220/api/v2/residents/${residentId}`)
+    fetch(`${url.ResidentIdCall}${residentId}`)
       .then(res => {
         if (!res.ok) {
           throw new Error(`${res.status}: ${res.statusText}`);

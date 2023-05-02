@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import * as url from './../urls';
 
 const NewResidentForm = () => {
   const [formData, setFormData] = useState({
@@ -10,21 +11,19 @@ const NewResidentForm = () => {
   const handleNewResidentFormSub = async (e) => {
     e.preventDefault();
     
-    const response = await fetch("https://localhost:7220/api/v2/residents", {
+    const response = await fetch(url.ResidentPostCall, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
     });
-    const data = await response.json();
-    console.log("Data:", data);
+    return response;
   }
 
   const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData({...formData, [name]: value});
-    console.log("formData:", formData);
   }
 
   const handleRadio = (e) => {
