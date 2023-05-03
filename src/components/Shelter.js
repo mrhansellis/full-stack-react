@@ -45,20 +45,26 @@ export default function Shelter() {
   } else {
     return (
       <>
-        <h1>Residents</h1>
-        
-          <ul>
-            {allDinos.map((residents, index) =>
-              //<div onClick={() => /*handleDinoDetailClick*/(residents.id)}>
-                <li key={index}>
-                  <h3>{residents.name}</h3>
-                  <Link to={`/details/${residents.residentId}`}>View Detail</Link>
-                </li>
-              //</div>
-            )}
-          </ul>
-        
-        <Link to="/form">Add New Dino</Link>
+        <div className='md:container md:mx-auto bg-gray-600 text-white p-10'>
+          <div className='py-20 '>
+            
+            <h1 className='text-6xl text-center font-bold py-15'>Residents</h1>
+              <div className='my-2 '>
+                <ul className='grid grid-cols-3 gap-2'>
+                  {allDinos.map((residents, index) =>
+                    <div className=''>
+                      <li key={index} className='bg-gradient-to-r from-indigo-500 via-pink-500 to-red-800 text-center rounded pt-1 leading-[200px] w-[50%]'>
+                        <h3>{residents.name}</h3>
+                        <Link to={`/details/${residents.residentId}`}>View Detail</Link>
+                      </li>
+                    </div>
+                  )}
+                </ul>
+              
+                <Link to="/form">Add New Dino</Link>
+              </div>
+          </div>
+        </div>
       </>
     )
   }
