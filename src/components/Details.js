@@ -3,6 +3,7 @@ import allDinosReducer from '../reducers/all-dinos-reducer';
 import { useParams } from 'react-router';
 import { getAllDinosFailure, getAllDinosSuccess } from '../actions';
 import * as url from './../urls';
+import { Link } from "react-router-dom";
 
 const initialState = {
   isLoaded: false,
@@ -51,6 +52,7 @@ export default function DinoDetails() {
           <li>Date arrived: {allDinos.admissionDate.slice(0, 10)}</li>
           <p><strong>Notes:</strong> {allDinos.notes}</p>
         </ul>
+        <button><Link to={`/editform/${residentId}`}>Edit</Link></button>
       </>
     )
   }
